@@ -1,17 +1,25 @@
 {
   "jspm": {
     "directories": {
-      "baseURL": "server"
+      "baseURL": "app"
     },
     "dependencies": {
       "ramda": "npm:ramda@^0.17.1",
       "react": "npm:react@^0.14.0-beta3",
-      "react-dom": "npm:react-dom@^0.14.0-beta3"
+      "react-dom": "npm:react-dom@^0.14.0-beta3",
+      "react-router": "npm:react-router@^1.0.0-beta3"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.1.13",
       "babel-runtime": "npm:babel-runtime@^5.1.13",
       "core-js": "npm:core-js@^0.9.4"
     }
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.13.3"
   }
 }

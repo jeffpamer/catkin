@@ -3,7 +3,8 @@
 */
 export default () => {
     const auth2 = gapi.auth2.init({
-        client_id: '712872741636-rv769phvm5usu8h5pddsfjeqol5t7rk6.apps.googleusercontent.com'
+        client_id: '712872741636-rv769phvm5usu8h5pddsfjeqol5t7rk6.apps.googleusercontent.com',
+        hosted_domain: 'willowtreeapps.com'
     })
 
     auth2.isSignedIn.listen(signinChanged)
@@ -26,27 +27,27 @@ const signinChanged = val => {
 */
 const userChanged = user => {
     const profile = user.getBasicProfile()
-    const userProfile = profile ? {
+    const userProfile = formatGoogleUser(profile)
+    console.log('user changed', userProfile);
+}
+
+const formatGoogleUser = profile => {
+    return profile ? {
         id: profile.getId(), // Don't use for DB entries, generate back-end session token
         name: profile.getName(),
         image: profile.getImageUrl(),
         email: profile.getEmail()
     } : {}
-
-    console.log('user now', userProfile)
 }
 
 export function signOut() {
-    window.console.log('trying to sign out')
     const auth2 = gapi.auth2.getAuthInstance()
-    auth2.signOut().then(() => {
-        console.log('User signed out.')
-    });
+    return auth2.signOut()
 }
 
 export function signIn() {
     const auth2 = gapi.auth2.getAuthInstance()
-    auth2.signIn().then(user => {
-        console.log('User signed in.', user)
-    });
+    return auth2.signIn()
+    .then(user => user.getBasicProfile())
+    .then(user => formatGoogleUser(user))
 }
